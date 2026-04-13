@@ -12,15 +12,15 @@ def aplicar_juros_atraso(valor, dias_atraso):
 
 def validar_metodo_pagamento(metodo):
     """Valida se o método de pagamento é aceito."""
-    metodos_aceitos = ["pix", "cartao_credito", "cartao_debito", "boleto"]
+    metodos_aceitos = ["pix", "cartao", "cartao_credito", "cartao_debito", "boleto"]
     return metodo.lower() in metodos_aceitos
 
 def processar_reembolso(valor_pago, valor_reembolso):
-    """Verifica se o reembolso é válido e retorna o saldo restante.
-    Retorna -1 caso o reembolso solicitado seja maior que o pago."""
+    """Verifica se o reembolso é válido e retorna o valor pago."""
     if valor_reembolso > valor_pago:
-        return -1 
-    return valor_pago - valor_reembolso
+        raise ValueError("Reembolso não pode ser maior que o valor pago")
+
+    return valor_pago
 
 if __name__ == "__main__":
     print("=== Sistema de Teste Interativo de Pagamentos ===")
