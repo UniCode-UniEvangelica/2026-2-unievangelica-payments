@@ -23,20 +23,13 @@ def test_calcular_desconto():
     assert calcular_desconto(200, 50) == 100
 
 def test_aplicar_juros_atraso():
-    # ERRO PROPOSITAL: A expectativa matemática está errada.
-    # A função original aplica juros simples de 1% ao dia.
-    # Para 100 reais, 5 dias de atraso seriam 105 reais (100 + 100 * 0.01 * 5).
-    # O teste abaixo está esperando 150, como se fosse 10% ao dia.
-    # ATIVIDADE: Corrigir a expectativa matemática abaixo para o valor correto (1% ao dia).
-    assert aplicar_juros_atraso(100, 5) == 150
+    assert aplicar_juros_atraso(100, 5) == 105.0
     assert aplicar_juros_atraso(100, 0) == 100
 
-# TODO: Implementar Testes: Crie os testes para a função validar_metodo_pagamento
-# Implemente nela pelo menos 2 asserções (assert):
-# 1 - Teste um método de pagamento aceito.
-# 2 - Teste um método rejeitado.
+def test_validacao_do_metodo():
+    assert validar_metodo_pagamento("pix") == True
+    assert validar_metodo_pagamento("cheque") == False
 
-# TODO: Implementar Testes: Crie os testes para a função processar_reembolso
-# Implemente nela pelo menos 2 asserções (assert):
-# 1 - Teste um reembolso válido (valor reembolsado menor ou igual ao pago).
-# 2 - Teste um caso de erro, simulando uma regra de negócio que restringe o reembolso (deve retornar -1).
+def test_de_reembolso():
+    assert processar_reembolso(100, 50) == 50
+    assert processar_reembolso(100, 200) == -1
