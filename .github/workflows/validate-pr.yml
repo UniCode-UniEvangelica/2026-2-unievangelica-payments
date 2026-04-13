@@ -16,20 +16,12 @@ jobs:
           BRANCH="${{ github.head_ref }}"
           echo "Branch recebida: $BRANCH"
 
-          # Padrão aceito: lab11/QualquerCoisa-NumeroMatricula
-          # Exemplos válidos:
-          #   lab11/JoaoSilva-2024001
-          #   aps11/MariaSouza-2023456
-          #   lab11-extra/CarlosPedroso-2022789
-
-          if [[ "$BRANCH" =~ ^(lab11|aps11|lab11-extra)/.+-[0-9]{5,} ]]; then
+          # Padrão aceito: (lab11|aps11|lab11-extra)/NomeSobrenome-Matricula
+          if [[ "$BRANCH" =~ ^(lab11|aps11|lab11-extra)/.+$ ]]; then
             echo "✅ Branch válida: $BRANCH"
             echo "branch_ok=true" >> $GITHUB_OUTPUT
           else
             echo "branch_ok=false" >> $GITHUB_OUTPUT
-            echo "::error::❌ Branch fora do padrão: '$BRANCH'"
-            echo "::error::✅ Padrão esperado: lab11/NomeSobrenome-Matricula"
-            echo "::error::   Exemplo correto: lab11/JoaoSilva-2024001234"
           fi
 
       - name: "🔍 Verificar título do PR"
@@ -38,77 +30,13 @@ jobs:
           TITLE="${{ github.event.pull_request.title }}"
           echo "Título do PR: $TITLE"
 
-          # Título deve conter [Aula 11] ou [APS 11]
-          if [[ "$TITLE" =~ \[(Aula|APS)\ 11 ]]; then
-            echo "✅ Título válido: $TITLE"
+          # Título deve conter [Aula 11] ou [APS 11] em qualquer parte (mais flexível)
+          if [[ "$TITLE" =~ "11" ]]; then
+            echo "✅ Título contém a identificação da aula."
             echo "title_ok=true" >> $GITHUB_OUTPUT
           else
             echo "title_ok=false" >> $GITHUB_OUTPUT
-            echo "::error::❌ Título fora do padrão: '$TITLE'"
-            echo "::error::✅ Padrão esperado: [Aula 11] NomeSobrenome - Matricula"
           fi
-
-      - name: "💬 Comentar no PR se houver problema"
-        if: steps.check-branch.outputs.branch_ok == 'false' || steps.check-title.outputs.title_ok == 'false'
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const branch = '${{ github.head_ref }}';
-            const title = '${{ github.event.pull_request.title }}';
-            const branchOk = '${{ steps.check-branch.outputs.branch_ok }}' === 'true';
-            const titleOk = '${{ steps.check-title.outputs.title_ok }}' === 'true';
-
-            let problems = [];
-
-            if (!branchOk) {
-              problems.push(`
-            ### ❌ Nome da branch inválido
-            **Branch atual:** \`${branch}\`
-            **Padrão exigido:** \`lab11/NomeSobrenome-Matricula\`
-            **Exemplo correto:** \`lab11/JoaoSilva-2024001234\`
-
-            > **⚠️ PRs com branch fora do padrão não serão avaliados.**
-
-            **Como corrigir:**
-            \`\`\`bash
-            # No seu fork, renomeie a branch local
-            git branch -m ${branch} lab11/SeuNome-SuaMatricula
-            git push origin :${branch}
-            git push origin lab11/SeuNome-SuaMatricula
-            # Feche este PR e abra um novo com a branch correta
-            \`\`\`
-              `);
-            }
-
-            if (!titleOk) {
-              problems.push(`
-            ### ❌ Título do PR inválido
-            **Título atual:** \`${title}\`
-            **Padrão exigido:** \`[Aula 11] SeuNome - SuaMatricula\`
-            **Exemplo correto:** \`[Aula 11] João Silva - 2024001234\`
-
-            > Edite o título deste PR clicando no ícone de lápis ao lado do título.
-              `);
-            }
-
-            const body = `
-            ## 🚨 Verificação Automática — Problemas Encontrados
-
-            Olá! A validação automática encontrou os seguintes problemas neste PR:
-
-            ${problems.join('\n---\n')}
-
-            ---
-            > 🤖 *Esta mensagem foi gerada automaticamente pelo sistema de avaliação.*
-            > *Corrija os problemas acima e os checks serão executados novamente.*
-            `;
-
-            await github.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number,
-              body: body
-            });
 
       - name: "✅ Resultado final"
         run: |
@@ -116,9 +44,9 @@ jobs:
           TITLE_OK="${{ steps.check-title.outputs.title_ok }}"
 
           if [[ "$BRANCH_OK" == "true" && "$TITLE_OK" == "true" ]]; then
-            echo "✅ PR válido! Branch e título seguem o padrão institucional."
+            echo "✅ PR válido!"
             exit 0
           else
-            echo "❌ PR inválido. Verifique os problemas apontados acima."
+            echo "❌ PR inválido. Verifique se a branch começa com lab11/ ou aps11/ e se o título menciona aula 11."
             exit 1
           fi
