@@ -1,0 +1,53 @@
+name: "🎓 Validar PR do Aluno"
+
+on:
+  pull_request:
+    types: [opened, edited, reopened, synchronize]
+
+jobs:
+  validar-padrao-pr:
+    name: "Verificar padrão de branch e título"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "🔍 Verificar nome da branch"
+        id: check-branch
+        run: |
+          BRANCH="${{ github.head_ref }}"
+          echo "Branch recebida: $BRANCH"
+
+          # Padrão aceito: pratica11/NomeSobrenome-Matricula  (atividade principal)
+          #               lab11-extra/NomeSobrenome-Matricula  (lab avançado)
+          if [[ "$BRANCH" =~ ^(pratica11|lab11-extra)/.+$ ]]; then
+            echo "✅ Branch válida: $BRANCH"
+            echo "branch_ok=true" >> $GITHUB_OUTPUT
+          else
+            echo "branch_ok=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: "🔍 Verificar título do PR"
+        id: check-title
+        run: |
+          TITLE="${{ github.event.pull_request.title }}"
+          echo "Título do PR: $TITLE"
+
+          # Título deve conter [Aula 11] ou [APS 11] em qualquer parte (mais flexível)
+          if [[ "$TITLE" =~ "11" ]]; then
+            echo "✅ Título contém a identificação da aula."
+            echo "title_ok=true" >> $GITHUB_OUTPUT
+          else
+            echo "title_ok=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: "✅ Resultado final"
+        run: |
+          BRANCH_OK="${{ steps.check-branch.outputs.branch_ok }}"
+          TITLE_OK="${{ steps.check-title.outputs.title_ok }}"
+
+          if [[ "$BRANCH_OK" == "true" && "$TITLE_OK" == "true" ]]; then
+            echo "✅ PR válido!"
+            exit 0
+          else
+            echo "❌ PR inválido. Verifique se a branch começa com pratica11/ (atividade) ou lab11-extra/ (bonus) e se o título menciona aula 11."
+            exit 1
+          fi

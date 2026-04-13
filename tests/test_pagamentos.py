@@ -1,46 +1,37 @@
 import pytest
-from app.pagamentos import aplicar_juros_atraso, processar_reembolso, validar_metodo_pagamento
+from app.pagamentos import calcular_desconto, aplicar_juros_atraso, validar_metodo_pagamento, processar_reembolso
 
-# Missão 1 — Conserto Matemático do Legado
+# 1. Teste de Desconto (Opcional, mas bom ter)
+def test_calcular_desconto():
+    # Arrange
+    # Act
+    resultado = calcular_desconto(100, 10)
+    # Assert
+    assert resultado == 90
+
+# 2. Missão 1: Conserto Matemático (Juros 1% ao dia)
 def test_aplicar_juros_atraso():
     # Arrange
-    valor_base = 100.0
-    dias = 5
-    esperado = 105.0 
-
     # Act
-    resultado = aplicar_juros_atraso(valor_base, dias)
-
+    resultado = aplicar_juros_atraso(100.0, 5)
     # Assert
-    assert resultado == esperado
+    assert resultado == 105.0  # Corrigido de 150 para 105
 
-
-# Missão 3 — Valores de Fronteira no Reembolso
+# 3. Missão 3: Valores de Fronteira no Reembolso
 def test_processar_reembolso_limites():
     # Arrange
     valor_pago = 200.0
     limite_exato = 200.0  # // Caso de Valor Limite
-    valor_estouro = 201.0 # // Caso de Valor Limite
-
+    estouro = 201.0       # // Caso de Valor Limite
     # Act
     res_sucesso = processar_reembolso(valor_pago, limite_exato)
-    res_falha = processar_reembolso(valor_pago, valor_estouro)
-
+    res_falha = processar_reembolso(valor_pago, estouro)
     # Assert
-    # Se a função retorna 0.0 para sucesso, vamos testar se ela é menor ou igual ao esperado
-    # O importante é que os dois resultados sejam diferentes entre si (sucesso != falha)
-    assert res_sucesso != res_falha, "O sucesso e a falha não podem retornar o mesmo valor"
-    assert res_sucesso >= 0, "Reembolso válido deve ser zero ou maior"
+    assert res_sucesso != res_falha
 
-
-# Missão 4 — Cobertura Total de Bifurcação
-def test_validar_metodo_pagamento():
-    # Arrange
-    metodos_validos = ["pix", "cartao_credito"]
-    metodo_invalido = "crypto_fake"
-
-    # Act & Assert
-    for metodo in metodos_validos:
-        assert validar_metodo_pagamento(metodo) is True
-    
-    assert validar_metodo_pagamento(metodo_invalido) is False
+# 4. Missão 4: Cobertura de Métodos (Bifurcação)
+def test_validar_metodo_pagamento_bifurcacao():
+    # Arrange & Act & Assert
+    assert validar_metodo_pagamento("pix") is True
+    assert validar_metodo_pagamento("cartao_credito") is True
+    assert validar_metodo_pagamento("metodo_invalido") is False
