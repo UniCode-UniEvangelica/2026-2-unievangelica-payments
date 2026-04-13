@@ -13,7 +13,7 @@ from app.pagamentos import (
 )
 
 # ====================================================================
-# ÁREA DO ALUNO
+# ÁREA DO ALUNO — Aluno Teste do Prof. Carlos | Matrícula: 99821234
 # ====================================================================
 
 def test_calcular_desconto():
@@ -23,20 +23,26 @@ def test_calcular_desconto():
     assert calcular_desconto(200, 50) == 100
 
 def test_aplicar_juros_atraso():
-    # ERRO PROPOSITAL: A expectativa matemática está errada.
-    # A função original aplica juros simples de 1% ao dia.
-    # Para 100 reais, 5 dias de atraso seriam 105 reais (100 + 100 * 0.01 * 5).
-    # O teste abaixo está esperando 150, como se fosse 10% ao dia.
-    # ATIVIDADE: Corrigir a expectativa matemática abaixo para o valor correto (1% ao dia).
-    assert aplicar_juros_atraso(100, 5) == 150
+    # CORREÇÃO DO BUG: juros simples = valor + (valor * 0.01 * dias)
+    # Fórmula: 100 + (100 * 0.01 * 5) = 105.0
+    assert aplicar_juros_atraso(100, 5) == 105.0
     assert aplicar_juros_atraso(100, 0) == 100
 
-# TODO: Implementar Testes: Crie os testes para a função validar_metodo_pagamento
-# Implemente nela pelo menos 2 asserções (assert):
-# 1 - Teste um método de pagamento aceito.
-# 2 - Teste um método rejeitado.
+def test_validar_metodo_pagamento():
+    # Arrange + Act + Assert
 
-# TODO: Implementar Testes: Crie os testes para a função processar_reembolso
-# Implemente nela pelo menos 2 asserções (assert):
-# 1 - Teste um reembolso válido (valor reembolsado menor ou igual ao pago).
-# 2 - Teste um caso de erro, simulando uma regra de negócio que restringe o reembolso (deve retornar -1).
+    # Branch True: métodos aceitos
+    assert validar_metodo_pagamento("pix") == True
+    assert validar_metodo_pagamento("CARTAO_CREDITO") == True  # case-insensitive
+
+    # Branch False: método rejeitado
+    assert validar_metodo_pagamento("cheque") == False
+    assert validar_metodo_pagamento("cripto") == False
+
+def test_processar_reembolso():
+    # Branch True: reembolso válido (menor ou igual ao pago)
+    assert processar_reembolso(200.0, 50.0) == 150.0
+    assert processar_reembolso(100.0, 100.0) == 0.0   # valor exato (boundary)
+
+    # Branch False: reembolso inválido → retorna -1
+    assert processar_reembolso(100.0, 150.0) == -1
