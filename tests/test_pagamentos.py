@@ -38,11 +38,16 @@ def test_validar_metodo_pagamento():
     Dica: Teste pelo menos um método aceito (ex: 'pix') e um rejeitado (ex: 'cheque').
     """
     # Arrange
+    metodo_aceito = 'pix'
+    metodo_rejeitado = 'cheque'
     
     # Act
-    
+    resultado_aceito = validar_metodo_pagamento(metodo_aceito)
+    resultado_rejeitado = validar_metodo_pagamento(metodo_rejeitado)
+
     # Assert
-    pass
+    assert resultado_aceito == True
+    assert resultado_rejeitado == False
 
 def test_processar_reembolso():
     """
@@ -52,8 +57,15 @@ def test_processar_reembolso():
     BÔNUS: Teste o valor limite (reembolso == valor_pago).
     """
     # Arrange
-    
+    valor_pago = 100
+    valor_reembolso = 50
+        
     # Act
+    resultado_valido = processar_reembolso(valor_pago, valor_reembolso)
+    resultado_invalido = processar_reembolso(valor_pago, valor_pago + valor_reembolso)
+    resultado_limite = processar_reembolso(valor_pago, valor_pago)
     
     # Assert
-    pass
+    assert resultado_valido == 50
+    assert resultado_invalido == -1
+    assert resultado_limite == 0
