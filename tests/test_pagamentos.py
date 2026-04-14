@@ -28,34 +28,48 @@ def test_aplicar_juros_atraso():
     resultado_sem_atraso = aplicar_juros_atraso(valor_pago, dias_ok)
     
     # Assert
-    # TODO: Corrigir o erro matemático abaixo (Juros simples de 1% ao dia)
-    # 100 + (100 * 0.01 * 5) deveria ser 105.0, não 150.0
-    assert resultado_com_atraso == 150.0   # BUG INTENCIONAL
+    # CORREÇÃO: O valor correto para 5 dias a 1% de 100 é 105.0
+    assert resultado_com_atraso == 105.0 
     assert resultado_sem_atraso == 100.0
 
 def test_validar_metodo_pagamento():
     """
     MISSÃO: Implementar testes para validar_metodo_pagamento.
-    Use a estrutura AAA (Arrange, Act, Assert).
-    Dica: Teste pelo menos um método aceito (ex: 'pix') e um rejeitado (ex: 'cheque').
     """
     # Arrange
+    metodo_valido = "pix"
+    metodo_invalido = "cheque"
     
     # Act
+    resultado_valido = validar_metodo_pagamento(metodo_valido)
+    resultado_invalido = validar_metodo_pagamento(metodo_invalido)
     
     # Assert
-    pass
+    assert resultado_valido is True
+    assert resultado_invalido is False
 
 def test_processar_reembolso():
     """
     MISSÃO: Implementar testes para processar_reembolso.
-    Use a estrutura AAA (Arrange, Act, Assert).
-    Dica: Teste o cenário de reembolso válido e o cenário de erro (-1).
-    BÔNUS: Teste o valor limite (reembolso == valor_pago).
     """
+    # Cenário 1: Reembolso válido (Bônus: Valor limite)
     # Arrange
+    valor_total = 200.0
+    valor_reembolso = 200.0
     
     # Act
+    resultado_sucesso = processar_reembolso(valor_total, valor_reembolso)
     
     # Assert
-    pass
+    assert resultado_sucesso == 0.0 # Saldo restante após reembolso total
+
+    # Cenário 2: Erro (Reembolso maior que o valor pago)
+    # Arrange
+    valor_total_erro = 100.0
+    valor_reembolso_erro = 150.0
+    
+    # Act
+    resultado_erro = processar_reembolso(valor_total_erro, valor_reembolso_erro)
+    
+    # Assert
+    assert resultado_erro == -1
