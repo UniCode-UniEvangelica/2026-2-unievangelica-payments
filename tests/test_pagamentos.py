@@ -30,7 +30,7 @@ def test_aplicar_juros_atraso():
     # Assert
     # TODO: Corrigir o erro matemático abaixo (Juros simples de 1% ao dia)
     # 100 + (100 * 0.01 * 5) deveria ser 105.0, não 150.0
-    assert resultado_com_atraso == 150.0   # BUG INTENCIONAL
+    assert resultado_com_atraso == 105.0   # BUG INTENCIONAL
     assert resultado_sem_atraso == 100.0
 
 def test_validar_metodo_pagamento():
@@ -44,7 +44,19 @@ def test_validar_metodo_pagamento():
     # Act
     
     # Assert
-    pass
+
+    def test_validar_metodo_pagamento():
+    # Arrange
+    metodo_valido = "pix"
+    metodo_invalido = "cheque"
+
+    # Act
+    resultado_valido = validar_metodo_pagamento(metodo_valido)
+    resultado_invalido = validar_metodo_pagamento(metodo_invalido)
+
+    # Assert
+    assert resultado_valido is True
+    assert resultado_invalido is False
 
 def test_processar_reembolso():
     """
@@ -58,4 +70,20 @@ def test_processar_reembolso():
     # Act
     
     # Assert
-    pass
+    
+    def test_processar_reembolso():
+    # Arrange
+    valor_pago = 100
+    reembolso_valido = 40
+    reembolso_invalido = 150
+    reembolso_limite = 100
+
+    # Act
+    resultado_valido = processar_reembolso(valor_pago, reembolso_valido)
+    resultado_invalido = processar_reembolso(valor_pago, reembolso_invalido)
+    resultado_limite = processar_reembolso(valor_pago, reembolso_limite)
+
+    # Assert
+    assert resultado_valido == 60
+    assert resultado_invalido == -1
+    assert resultado_limite == 0
