@@ -30,32 +30,42 @@ def test_aplicar_juros_atraso():
     # Assert
     # TODO: Corrigir o erro matemático abaixo (Juros simples de 1% ao dia)
     # 100 + (100 * 0.01 * 5) deveria ser 105.0, não 150.0
-    assert resultado_com_atraso == 150.0   # BUG INTENCIONAL
+    assert resultado_com_atraso == 105.0   # BUG INTENCIONAL
     assert resultado_sem_atraso == 100.0
 
 def test_validar_metodo_pagamento():
-    """
-    MISSÃO: Implementar testes para validar_metodo_pagamento.
-    Use a estrutura AAA (Arrange, Act, Assert).
-    Dica: Teste pelo menos um método aceito (ex: 'pix') e um rejeitado (ex: 'cheque').
-    """
     # Arrange
-    
+    metodo_valido = "pix"
+    metodo_valido_maiusculo = "PIX"
+    metodo_invalido = "cheque"
+    metodo_vazio = ""
+
     # Act
-    
+    resultado_valido = validar_metodo_pagamento(metodo_valido)
+    resultado_valido_maiusculo = validar_metodo_pagamento(metodo_valido_maiusculo)
+    resultado_invalido = validar_metodo_pagamento(metodo_invalido)
+    resultado_vazio = validar_metodo_pagamento(metodo_vazio)
+
     # Assert
-    pass
+    assert resultado_valido == True
+    assert resultado_valido_maiusculo == True
+    assert resultado_invalido == False
+    assert resultado_vazio == False
 
 def test_processar_reembolso():
-    """
-    MISSÃO: Implementar testes para processar_reembolso.
-    Use a estrutura AAA (Arrange, Act, Assert).
-    Dica: Teste o cenário de reembolso válido e o cenário de erro (-1).
-    BÔNUS: Teste o valor limite (reembolso == valor_pago).
-    """
+    
     # Arrange
-    
+    valor_pago = 200
+    reembolso_valido = 150
+    reembolso_limite = 200      # Caso de Valor Limite
+    reembolso_excedente = 201   # Caso de Valor Limite
+
     # Act
-    
+    resultado_valido = processar_reembolso(valor_pago, reembolso_valido)
+    resultado_limite = processar_reembolso(valor_pago, reembolso_limite)
+    resultado_excedente = processar_reembolso(valor_pago, reembolso_excedente)
+
     # Assert
-    pass
+    assert resultado_valido == 50
+    assert resultado_limite == 0
+    assert resultado_excedente == -1
