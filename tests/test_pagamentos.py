@@ -10,52 +10,63 @@ def test_calcular_desconto():
     # Arrange
     valor = 100
     percentual = 10
-    
+
     # Act
     resultado = calcular_desconto(valor, percentual)
-    
+
     # Assert
     assert resultado == 90
+
 
 def test_aplicar_juros_atraso():
     # Arrange
     valor_pago = 100
     dias_atraso = 5
     dias_ok = 0
-    
+
     # Act
     resultado_com_atraso = aplicar_juros_atraso(valor_pago, dias_atraso)
     resultado_sem_atraso = aplicar_juros_atraso(valor_pago, dias_ok)
-    
+
     # Assert
-    # TODO: Corrigir o erro matemático abaixo (Juros simples de 1% ao dia)
-    # 100 + (100 * 0.01 * 5) deveria ser 105.0, não 150.0
-    assert resultado_com_atraso == 150.0   # BUG INTENCIONAL
+    # 100 + (100 * 0.01 * 5) = 105.0
+    assert resultado_com_atraso == 105.0
     assert resultado_sem_atraso == 100.0
 
+
 def test_validar_metodo_pagamento():
-    """
-    MISSÃO: Implementar testes para validar_metodo_pagamento.
-    Use a estrutura AAA (Arrange, Act, Assert).
-    Dica: Teste pelo menos um método aceito (ex: 'pix') e um rejeitado (ex: 'cheque').
-    """
     # Arrange
-    
+    metodo_pix = "pix"
+    metodo_credito = "cartao_credito"
+    metodo_debito = "cartao_debito"
+    metodo_boleto = "boleto"
+    metodo_invalido = "cheque"
+
     # Act
-    
+    resultado_pix = validar_metodo_pagamento(metodo_pix)
+    resultado_credito = validar_metodo_pagamento(metodo_credito)
+    resultado_debito = validar_metodo_pagamento(metodo_debito)
+    resultado_boleto = validar_metodo_pagamento(metodo_boleto)
+    resultado_invalido = validar_metodo_pagamento(metodo_invalido)
+
     # Assert
-    pass
+    assert resultado_pix is True
+    assert resultado_credito is True
+    assert resultado_debito is True
+    assert resultado_boleto is True
+    assert resultado_invalido is False
+
 
 def test_processar_reembolso():
-    """
-    MISSÃO: Implementar testes para processar_reembolso.
-    Use a estrutura AAA (Arrange, Act, Assert).
-    Dica: Teste o cenário de reembolso válido e o cenário de erro (-1).
-    BÔNUS: Teste o valor limite (reembolso == valor_pago).
-    """
     # Arrange
-    
+    valor_pago = 200
+    reembolso_limite = 200      # Caso de Valor Limite
+    reembolso_excedido = 201    # Caso de Valor Limite
+
     # Act
-    
+    resultado_limite = processar_reembolso(valor_pago, reembolso_limite)
+    resultado_excedido = processar_reembolso(valor_pago, reembolso_excedido)
+
     # Assert
-    pass
+    assert resultado_limite == 0
+    assert resultado_excedido == -1
