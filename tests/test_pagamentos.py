@@ -1,4 +1,3 @@
-import pytest
 from app.pagamentos import (
     calcular_desconto,
     aplicar_juros_atraso,
