@@ -72,20 +72,58 @@ Se você abrir `tests/test_pagamentos.py`, vai encontrar um *Déjà vu* do Ciclo
 
 ---
 
-## 📤 Como entregar (Pull Request)
+## 📤 Como entregar (Pull Request via Fork)
 
-1. Crie sua branch com o padrão obrigatório:
-   ```bash
-   git checkout -b pratica11/SeuNome-SuaMatricula
-   ```
+> ⚠️ **O repositório é da organização UniCode-UniEvangelica. Você não tem permissão de escrita direta.** Por isso, o fluxo correto é via **Fork**.
 
-2. Implemente as correções e os testes pendentes (`TODO`).
+### Passo 1 — Faça o Fork do repositório
 
-3. Abra um Pull Request para a branch `main` com o título contendo `[Aula 11]`.
+1. Acesse: [https://github.com/UniCode-UniEvangelica/2026-2-unievangelica-payments](https://github.com/UniCode-UniEvangelica/2026-2-unievangelica-payments)
+2. Clique no botão **Fork** (canto superior direito)
+3. Confirme o fork para a **sua conta pessoal** do GitHub
 
-4. Preencha o template do PR completamente — PRs incompletos não são avaliados.
+### Passo 2 — Clone o SEU fork (não o original)
 
-> **Lab Extra:** Para o laboratório de integração, use o prefixo `lab11-extra/SeuNome-SuaMatricula`.
+```bash
+git clone https://github.com/SEU_USERNAME/2026-2-unievangelica-payments.git
+cd 2026-2-unievangelica-payments
+```
+
+> ⚠️ Substitua `SEU_USERNAME` pelo seu usuário do GitHub.
+
+### Passo 3 — Crie sua branch com o padrão obrigatório
+
+```bash
+git checkout -b pratica11/NomeSobrenome-Matricula
+# Exemplo: git checkout -b pratica11/JoaoSilva-2024001
+```
+
+### Passo 4 — Implemente e teste localmente
+
+```bash
+pip install pytest
+python -m pytest tests/test_pagamentos.py -v
+```
+
+### Passo 5 — Faça commit e push para o **seu fork**
+
+```bash
+git add tests/test_pagamentos.py
+git commit -m "feat(pratica11): implementa estrutura AAA e valores limite"
+git push origin pratica11/NomeSobrenome-Matricula
+```
+
+### Passo 6 — Abra o Pull Request para o repositório original
+
+1. Acesse o **seu fork** no GitHub
+2. Clique no botão **"Compare & pull request"** que aparecerá automaticamente
+3. Verifique que o PR aponta de:
+   - **base repository:** `UniCode-UniEvangelica/2026-2-unievangelica-payments` → `main`
+   - **head repository:** `SEU_USERNAME/2026-2-unievangelica-payments` → `pratica11/NomeSobrenome-Matricula`
+4. Título do PR deve conter `[Aula 11]` — ex: `[Aula 11] Pratica11/JoaoSilva-2024001`
+5. Preencha o template do PR completamente — PRs incompletos não são avaliados
+
+> **Lab Extra:** Para o laboratório de integração, use o prefixo `lab11-extra/NomeSobrenome-Matricula`
 
 ---
 
