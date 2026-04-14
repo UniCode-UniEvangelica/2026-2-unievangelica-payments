@@ -28,34 +28,47 @@ def test_aplicar_juros_atraso():
     resultado_sem_atraso = aplicar_juros_atraso(valor_pago, dias_ok)
     
     # Assert
-    # TODO: Corrigir o erro matemático abaixo (Juros simples de 1% ao dia)
-    # 100 + (100 * 0.01 * 5) deveria ser 105.0, não 150.0
-    assert resultado_com_atraso == 150.0   # BUG INTENCIONAL
+    assert resultado_com_atraso == 105.0
     assert resultado_sem_atraso == 100.0
 
 def test_validar_metodo_pagamento():
-    """
-    MISSÃO: Implementar testes para validar_metodo_pagamento.
-    Use a estrutura AAA (Arrange, Act, Assert).
-    Dica: Teste pelo menos um método aceito (ex: 'pix') e um rejeitado (ex: 'cheque').
-    """
     # Arrange
+    metodo_pix = "pix"
+    metodo_cartao_credito = "cartao_credito"
+    metodo_cartao_debito = "cartao_debito"
+    metodo_boleto = "boleto"
+    metodo_maiusculo = "PIX"
+    metodo_invalido = "cheque"
     
     # Act
+    resultado_pix = validar_metodo_pagamento(metodo_pix)
+    resultado_cartao_credito = validar_metodo_pagamento(metodo_cartao_credito)
+    resultado_cartao_debito = validar_metodo_pagamento(metodo_cartao_debito)
+    resultado_boleto = validar_metodo_pagamento(metodo_boleto)
+    resultado_maiusculo = validar_metodo_pagamento(metodo_maiusculo)
+    resultado_invalido = validar_metodo_pagamento(metodo_invalido)
     
     # Assert
-    pass
+    assert resultado_pix is True
+    assert resultado_cartao_credito is True
+    assert resultado_cartao_debito is True
+    assert resultado_boleto is True
+    assert resultado_maiusculo is True
+    assert resultado_invalido is False
 
 def test_processar_reembolso():
-    """
-    MISSÃO: Implementar testes para processar_reembolso.
-    Use a estrutura AAA (Arrange, Act, Assert).
-    Dica: Teste o cenário de reembolso válido e o cenário de erro (-1).
-    BÔNUS: Teste o valor limite (reembolso == valor_pago).
-    """
     # Arrange
+    valor_pago = 200
+    valor_reembolso_valido = 75
+    valor_reembolso_limite = 200  # Caso de Valor Limite
+    valor_reembolso_invalido = 201  # Caso de Valor Limite
     
     # Act
+    resultado_valido = processar_reembolso(valor_pago, valor_reembolso_valido)
+    resultado_limite = processar_reembolso(valor_pago, valor_reembolso_limite)
+    resultado_invalido = processar_reembolso(valor_pago, valor_reembolso_invalido)
     
     # Assert
-    pass
+    assert resultado_valido == 125
+    assert resultado_limite == 0
+    assert resultado_invalido == -1
