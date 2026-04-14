@@ -58,8 +58,16 @@ def test_processar_reembolso():
     BÔNUS: Teste o valor limite (reembolso == valor_pago).
     """
     # Arrange
+    valor_pago = 100
+    valor_reembolso = 50
+    valor_reembolso_limite = 100
+    valor_reembolso_invalido = 150
     
     # Act
-    
+    resultado_valido = processar_reembolso(valor_pago, valor_reembolso)
+    resultado_invalido = processar_reembolso(valor_pago, valor_reembolso_invalido)
+    resultado_limite = processar_reembolso(valor_pago, valor_reembolso_limite)
     # Assert
-    pass
+    assert resultado_valido == 50
+    assert resultado_invalido == -1
+    assert resultado_limite == 0
