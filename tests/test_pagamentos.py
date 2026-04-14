@@ -1,42 +1,79 @@
-import sys
-import os
-
-# Adiciona o diretório pai ao sys.path para garantir que o módulo 'app' seja encontrado,
-# independente da pasta de onde o aluno rode o pytest.
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+import pytest
 
 from app.pagamentos import (
     calcular_desconto,
     aplicar_juros_atraso,
     validar_metodo_pagamento,
-    processar_reembolso
+    processar_reembolso,
 )
 
-# ====================================================================
-# ÁREA DO ALUNO
-# ====================================================================
 
 def test_calcular_desconto():
-    # Teste Correto: 10% de desconto sobre 100 deve ser 90
-    assert calcular_desconto(100, 10) == 90
-    # Teste Correto: 50% de desconto sobre 200 deve ser 100
-    assert calcular_desconto(200, 50) == 100
+    # Arrange
+    valor = 100
+    percentual = 10
+
+    # Act
+    resultado = calcular_desconto(valor, percentual)
+
+    # Assert
+    assert resultado == 90
+
 
 def test_aplicar_juros_atraso():
-    # ERRO PROPOSITAL: A expectativa matemática está errada.
-    # A função original aplica juros simples de 1% ao dia.
-    # Para 100 reais, 5 dias de atraso seriam 105 reais (100 + 100 * 0.01 * 5).
-    # O teste abaixo está esperando 150, como se fosse 10% ao dia.
-    # ATIVIDADE: Corrigir a expectativa matemática abaixo para o valor correto (1% ao dia).
-    assert aplicar_juros_atraso(100, 5) == 150
-    assert aplicar_juros_atraso(100, 0) == 100
+    # Arrange
+    valor_pago = 100
+    dias_atraso = 5
+    dias_ok = 0
 
-# TODO: Implementar Testes: Crie os testes para a função validar_metodo_pagamento
-# Implemente nela pelo menos 2 asserções (assert):
-# 1 - Teste um método de pagamento aceito.
-# 2 - Teste um método rejeitado.
+    # Act
+    resultado_com_atraso = aplicar_juros_atraso(valor_pago, dias_atraso)
+    resultado_sem_atraso = aplicar_juros_atraso(valor_pago, dias_ok)
 
-# TODO: Implementar Testes: Crie os testes para a função processar_reembolso
-# Implemente nela pelo menos 2 asserções (assert):
-# 1 - Teste um reembolso válido (valor reembolsado menor ou igual ao pago).
-# 2 - Teste um caso de erro, simulando uma regra de negócio que restringe o reembolso (deve retornar -1).
+    # Assert
+    assert resultado_com_atraso == 105.0
+    assert resultado_sem_atraso == 100.0
+
+
+def test_validar_metodo_pagamento():
+    # Arrange
+    metodo_pix = "pix"
+    metodo_cartao_credito = "cartao_credito"
+    metodo_cartao_debito = "cartao_debito"
+    metodo_boleto = "boleto"
+    metodo_invalido = "cheque"
+    metodo_invalido_vazio = ""
+
+    # Act
+    resultado_pix = validar_metodo_pagamento(metodo_pix)
+    resultado_cartao_credito = validar_metodo_pagamento(metodo_cartao_credito)
+    resultado_cartao_debito = validar_metodo_pagamento(metodo_cartao_debito)
+    resultado_boleto = validar_metodo_pagamento(metodo_boleto)
+    resultado_invalido = validar_metodo_pagamento(metodo_invalido)
+    resultado_invalido_vazio = validar_metodo_pagamento(metodo_invalido_vazio)
+
+    # Assert
+    assert resultado_pix is True
+    assert resultado_cartao_credito is True
+    assert resultado_cartao_debito is True
+    assert resultado_boleto is True
+    assert resultado_invalido is False
+    assert resultado_invalido_vazio is False
+
+
+def test_processar_reembolso():
+    # Arrange
+    valor_pago = 200.00
+    valor_reembolso_exato = 200.00  # // Caso de Valor Limite
+    valor_reembolso_irregular = 201.00  # // Caso de Valor Limite
+    valor_reembolso_parcial = 73.45
+
+    # Act
+    resultado_reembolso_exato = processar_reembolso(valor_pago, valor_reembolso_exato)
+    resultado_reembolso_irregular = processar_reembolso(valor_pago, valor_reembolso_irregular)
+    resultado_reembolso_parcial = processar_reembolso(valor_pago, valor_reembolso_parcial)
+
+    # Assert
+    assert resultado_reembolso_exato == 0.0
+    assert resultado_reembolso_irregular == -1
+    assert resultado_reembolso_parcial == pytest.approx(126.55)
