@@ -1,4 +1,6 @@
-import pytest
+import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from app.pagamentos import (
     calcular_desconto,
     aplicar_juros_atraso,
@@ -28,34 +30,36 @@ def test_aplicar_juros_atraso():
     resultado_sem_atraso = aplicar_juros_atraso(valor_pago, dias_ok)
     
     # Assert
-    # TODO: Corrigir o erro matemático abaixo (Juros simples de 1% ao dia)
-    # 100 + (100 * 0.01 * 5) deveria ser 105.0, não 150.0
-    assert resultado_com_atraso == 150.0   # BUG INTENCIONAL
+    # CORRIGIDO: 100 + (100 * 0.01 * 5) = 105.0
+    assert resultado_com_atraso == 105.0
     assert resultado_sem_atraso == 100.0
 
 def test_validar_metodo_pagamento():
-    """
-    MISSÃO: Implementar testes para validar_metodo_pagamento.
-    Use a estrutura AAA (Arrange, Act, Assert).
-    Dica: Teste pelo menos um método aceito (ex: 'pix') e um rejeitado (ex: 'cheque').
-    """
     # Arrange
+    metodo_valido = "pix"
+    metodo_invalido = "cheque"
     
     # Act
+    resultado_valido = validar_metodo_pagamento(metodo_valido)
+    resultado_invalido = validar_metodo_pagamento(metodo_invalido)
     
     # Assert
-    pass
+    assert resultado_valido is True
+    assert resultado_invalido is False
 
 def test_processar_reembolso():
-    """
-    MISSÃO: Implementar testes para processar_reembolso.
-    Use a estrutura AAA (Arrange, Act, Assert).
-    Dica: Teste o cenário de reembolso válido e o cenário de erro (-1).
-    BÔNUS: Teste o valor limite (reembolso == valor_pago).
-    """
     # Arrange
+    valor_total = 200.0
+    valor_reembolso_valido = 50.0
+    valor_reembolso_limite = 200.0
+    valor_reembolso_maior = 250.0
     
     # Act
+    res_sucesso = processar_reembolso(valor_total, valor_reembolso_valido)
+    res_limite = processar_reembolso(valor_total, valor_reembolso_limite)
+    res_erro = processar_reembolso(valor_total, valor_reembolso_maior)
     
     # Assert
-    pass
+    assert res_sucesso == 150.0  # Saldo restante após reembolso
+    assert res_limite == 0.0     # Reembolso total
+    assert res_erro == -1        # Erro por tentar reembolsar mais que o pago
