@@ -39,12 +39,16 @@ def test_validar_metodo_pagamento():
     Use a estrutura AAA (Arrange, Act, Assert).
     Dica: Teste pelo menos um método aceito (ex: 'pix') e um rejeitado (ex: 'cheque').
     """
+
     # Arrange
-    
+    metodo_aceito = "pix"
+    metodo_rejeitado = "cheque"
+
     # Act
     
     # Assert
-    pass
+    assert resultado_aceito == True
+    assert resultado_rejeitado == False
 
 def test_processar_reembolso():
     """
