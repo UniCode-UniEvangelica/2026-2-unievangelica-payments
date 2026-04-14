@@ -38,15 +38,19 @@ Marque todos os itens antes de submeter:
 
 **1. Por que o teste `test_aplicar_juros_atraso` estava falhando?**
 
-<!-- Escreva aqui -->
+O teste falhava pois o resultado esperado era diferente do que a função retornava, que por sinal estava correto. A solução foi corrigir o teste para que ficasse de acordo com o valor esperado da função. Corrigindo isso conseguimos fazer com que o teste passa-se e que ficasse condizente com o que a função pedia.
 
 **2. Qual a diferença entre um Stub e um Mock? Use um exemplo do contexto de pagamentos.**
 
-<!-- Escreva aqui -->
+Um Stub é uma substituição simples de uma dependência externa que apenas retorna um valor fixo, sem verificar como foi chamado. Um Mock além de substituir a dependência, ele também verifica se foi chamado corretamente, com quais argumentos e quantas vezes.
+
+No contexto de pagamentos, um Stub seria substituir a função validar_metodo_pagamento para sempre retornar True, sem se preocupar em como ela foi chamada — apenas garantindo que o restante do fluxo funcione. Já um Mock seria verificar, por exemplo, se processar_reembolso foi chamado exatamente uma vez com os argumentos corretos (valor_pago=150, reembolso=150), garantindo que a lógica de negócio acionou a função no momento certo.
 
 **3. O que é Branch Coverage e por que ela é mais rigorosa que Statement Coverage?**
 
-<!-- Escreva aqui -->
+Statement Coverage verifica se cada linha de código foi executada ao menos uma vez durante os testes. Já o Branch Coverage verifica se cada possível caminho de uma decisão (if/else) foi testado, tanto o caminho verdadeiro quanto o falso.
+
+Por exemplo, na função aplicar_juros_atraso, um único teste com dias_atraso=5 garante 100% de Statement Coverage, pois a linha de juros é executada. Porém, o Branch Coverage exige que também se teste dias_atraso=0, cobrindo o caminho em que não há atraso. Por isso o Branch Coverage é mais rigoroso: ele encontra bugs que ficam escondidos em caminhos alternativos do código que o Statement Coverage simplesmente ignora.
 
 ---
 
