@@ -10,10 +10,10 @@ def test_calcular_desconto():
     # Arrange
     valor = 100
     percentual = 10
-
+    
     # Act
     resultado = calcular_desconto(valor, percentual)
-
+    
     # Assert
     assert resultado == 90
 
@@ -22,11 +22,11 @@ def test_aplicar_juros_atraso():
     valor_pago = 100
     dias_atraso = 5
     dias_ok = 0
-
+    
     # Act
     resultado_com_atraso = aplicar_juros_atraso(valor_pago, dias_atraso)
     resultado_sem_atraso = aplicar_juros_atraso(valor_pago, dias_ok)
-
+    
     # Assert
     assert resultado_com_atraso == 105.0
     assert resultado_sem_atraso == 100.0
