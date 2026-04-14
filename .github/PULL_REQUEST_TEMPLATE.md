@@ -4,10 +4,10 @@
 
 | Campo | Valor |
 |:---|:---|
-| **Nome completo** | <!-- Ex: João da Silva Souza --> |
-| **Matrícula** | <!-- Ex: 2024001234 --> |
-| **Turma** | <!-- A (Segundas) ou B (Quintas) --> |
-| **Nome da branch** | <!-- Ex: pratica11/JoaoSilva-2024001234 --> |
+| **Nome completo** | <!-- Erick Nepomuceno Ribeiro Silva --> |
+| **Matrícula** | <!-- 2310817 --> |
+| **Turma** | <!-- B --> |
+| **Nome da branch** | <!-- Ex: pratica11/ErickNepomuceno-2310817 --> |
 
 ---
 
@@ -15,12 +15,12 @@
 
 Marque todos os itens antes de submeter:
 
-- [ ] A branch segue o padrão `pratica11/NomeSobrenome-Matricula`
-- [ ] O bug de `test_aplicar_juros_atraso` foi identificado e corrigido
-- [ ] `test_validar_metodo_pagamento` implementado com ≥ 2 asserts (aceito e rejeitado)
-- [ ] `test_processar_reembolso` implementado com ≥ 2 asserts (válido e -1)
-- [ ] Todos os testes passam (`python -m pytest tests/test_pagamentos.py -v`)
-- [ ] Screenshot do terminal com os testes `PASSED` está anexada abaixo
+- [x] A branch segue o padrão `pratica11/NomeSobrenome-Matricula`
+- [x] O bug de `test_aplicar_juros_atraso` foi identificado e corrigido
+- [x] `test_validar_metodo_pagamento` implementado com ≥ 2 asserts (aceito e rejeitado)
+- [x] `test_processar_reembolso` implementado com ≥ 2 asserts (válido e -1)
+- [x] Todos os testes passam (`python -m pytest tests/test_pagamentos.py -v`)
+- [x] Screenshot do terminal com os testes `PASSED` está anexada abaixo
 
 ---
 
@@ -28,7 +28,7 @@ Marque todos os itens antes de submeter:
 
 > Arraste a imagem aqui ou cole com Ctrl+V. O terminal deve mostrar `X passed` em verde.
 
-<!-- Cole a imagem aqui -->
+![alt text](image.png)
 
 ---
 
@@ -38,15 +38,21 @@ Marque todos os itens antes de submeter:
 
 **1. Por que o teste `test_aplicar_juros_atraso` estava falhando?**
 
-<!-- Escreva aqui -->
+Estava falhando pois o valor esperado na função não era matematicamente lógico de acordo com a porcentagem de juros definida
 
 **2. Qual a diferença entre um Stub e um Mock? Use um exemplo do contexto de pagamentos.**
 
-<!-- Escreva aqui -->
+Um Stub é um objeto simulado que retorna valores pré-definidos, sem verificar como foi utilizado. Ele serve apenas para substituir uma dependência externa e controlar o retorno.
+
+Já um Mock também simula uma dependência, mas além disso, ele verifica interações, como se um método foi chamado, quantas vezes e com quais parâmetros.
 
 **3. O que é Branch Coverage e por que ela é mais rigorosa que Statement Coverage?**
 
-<!-- Escreva aqui -->
+Branch Coverage verifica se todas as decisões do código foram testadas em todos os seus caminhos possíveis.
+
+Já o Statement Coverage verifica apenas se todas as linhas foram executadas pelo menos uma vez.
+
+Ela é mais rigorosa porque não basta executar o código — é preciso garantir que todas as decisões foram realmente testadas, cobrindo diferentes cenários.
 
 ---
 
@@ -54,7 +60,7 @@ Marque todos os itens antes de submeter:
 
 > Cite ao menos uma referência (Delamaro, Pytest docs, Martin Fowler, etc.)
 
-<!-- Ex: DELAMARO, M. Introdução ao Teste de Software. Cap. Caixa-Branca. -->
+DELAMARO, M. Introdução ao Teste de Software. Cap. Caixa-Branca.
 
 ---
 
