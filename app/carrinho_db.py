@@ -69,19 +69,16 @@ def adicionar_item(
 
 def listar_itens(conn: sqlite3.Connection) -> list:
     """
-    Retorna todos os itens do carrinho como lista de dicionários.
+    Retorna todos os itens do carrinho. 
+    Utiliza sqlite3.Row para permitir acesso por índice (tupla) ou chave.
 
     Returns:
-        list[dict]: Cada dict contém as chaves: id, nome, preco, quantidade.
-                    Retorna lista vazia se o carrinho estiver vazio.
+        list[sqlite3.Row]: Lista de linhas do banco.
     """
+    conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
     cursor.execute("SELECT id, nome, preco, quantidade FROM carrinho")
-    rows = cursor.fetchall()
-    return [
-        {"id": row[0], "nome": row[1], "preco": row[2], "quantidade": row[3]}
-        for row in rows
-    ]
+    return cursor.fetchall()
 
 
 def calcular_total(conn: sqlite3.Connection) -> float:
