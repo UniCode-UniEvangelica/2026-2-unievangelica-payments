@@ -29,9 +29,9 @@ def test_aplicar_juros_atraso():
     resultado_sem_atraso = aplicar_juros_atraso(valor_pago, dias_ok)
  
     # Assert
-    # Juros simples de 1% ao dia: 100 + (100 * 0.01 * 5) = 105.0
     assert resultado_com_atraso == 105.0
     assert resultado_sem_atraso == 100.0
+
 
 def test_validar_metodo_pagamento():
     # Arrange
@@ -45,6 +45,7 @@ def test_validar_metodo_pagamento():
     # Assert
     assert result_aceito == True
     assert result_negado == False
+
 
 def test_processar_reembolso():
     # Arrange
