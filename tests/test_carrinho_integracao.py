@@ -1,27 +1,4 @@
 #!/usr/bin/env python3
-"""
-Testes de INTEGRAÇÃO — Módulo Carrinho (SQLite :memory:)
-Aula 11 — Teste de Software (2026.1) | UniCode UniEvangelica
-
-=======================================================================
-⚠️  POR QUE ESTE ARQUIVO É DIFERENTE DE test_pagamentos.py?
-=======================================================================
-
-  test_pagamentos.py       →  TESTE UNITÁRIO
-  ─────────────────────       ─────────────────────────────────────────
-  • Testa funções puras       • Sem banco de dados real
-  • Usa Stubs/Mocks            • Sem rede, sem arquivo externo
-  • Rápido: < 1ms por teste   • Isola a LÓGICA de negócio
-
-  test_carrinho_integracao.py →  TESTE DE INTEGRAÇÃO
-  ────────────────────────────   ──────────────────────────────────────
-  • Testa módulo + banco real  • SQLite real (em memória)
-  • Sem Mocks — toca o banco!  • Verifica PERSISTÊNCIA dos dados
-  • Um pouco mais lento        • Isola via fixture (banco novo p/ cada teste)
-
-=======================================================================
-"""
-
 import sqlite3
 import pytest
 import sys
@@ -45,15 +22,6 @@ from app.carrinho_db import (
 
 @pytest.fixture
 def db():
-    """
-    Fixture que entrega uma conexão SQLite ':memory:' com a tabela
-    'carrinho' já criada.
-
-    O banco EM MEMÓRIA é:
-      ✅ Criado do zero antes de cada teste (setup)
-      ✅ Destruído automaticamente ao fim de cada teste (teardown)
-      ✅ Completamente isolado — um teste não suja o outro
-    """
     conn = sqlite3.connect(":memory:")   # banco vive apenas na RAM
     criar_tabela(conn)                   # cria a estrutura da tabela
     yield conn                           # entrega para o teste
@@ -66,13 +34,22 @@ def db():
 
 def test_item_persiste_no_banco(db):
     """
-    MISSÃO: Verificar que um item inserido realmente fica no banco.
+    Verificar que um item inserido realmente fica no banco.
     Arrange: Use adicionar_item(db, ...)
     Act: Use listar_itens(db)
     Assert: Verifique se o item está na lista e se os dados estão corretos.
     """
-    # TODO: Implementar
-    pass
+
+    # Arrange
+    adicionar_item(db, 'Produto teste 01', 10.0)
+
+    # Act
+    itens = listar_itens(db)
+
+    # Assert
+    assert len(itens) == 1
+    assert itens[0]['nome'] == 'Produto teste 01'
+    assert itens[0]['preco'] == 10.0
 
 def test_multiplos_itens_persistem(db):
     """
@@ -80,17 +57,46 @@ def test_multiplos_itens_persistem(db):
     Act: lista os itens
     Assert: exatamente 3 itens retornados
     """
-    # TODO: Implementar
-    pass
+    # Arrange
+    products = [ 
+        { 
+            'id': 1,
+            'nome': 'Produto 01', 
+            'preco': 20.0, 
+            'quantidade': 1 
+        },
+        { 
+            'id': 2,
+            'nome': 'Produto 02', 
+            'preco': 100.0,
+            'quantidade': 2
+        }, 
+        { 
+            'id': 3,
+            'nome': 'Produto 03', 
+            'preco': 200.0, 
+            'quantidade': 3 
+        }
+    ]
+
+    adicionar_item(db, 'Produto 01', 20.0, 1)
+    adicionar_item(db, 'Produto 02', 100.0, 2)
+    adicionar_item(db, 'Produto 03', 200.0, 3)
+
+    # Act
+    itens = listar_itens(db)
+
+    # Assert
+    assert len(itens)
+    assert itens == products
 
 def test_preco_negativo_lanca_value_error(db):
     """
     Assert: ValueError deve ser lançado
     Dica: use pytest.raises(ValueError)
     """
-    # TODO: Implementar
-    pass
-
+    with pytest.raises(ValueError):
+        adicionar_item(db, "Produto inválido", -10, 1)
 
 # =====================================================================
 # GRUPO 2 — Testes de Cálculo de Total
@@ -101,24 +107,45 @@ def test_carrinho_vazio_retorna_zero(db):
     Arrange: banco vazio (nenhum insert)
     Act + Assert: calcular_total retorna 0.0
     """
-    # TODO: Implementar
-    pass
+    # Arrange 
+
+    # Act
+    total = calcular_total(db)
+
+    # Aseert
+    assert total == 0.00
 
 def test_total_considera_quantidade(db):
     """
     Arrange: insere 3 unidades de R$ 50,00
     Assert: total == 150.0  (preco × quantidade)
     """
-    # TODO: Implementar
-    pass
+
+    # Arrange
+    adicionar_item(db, 'Produto teste total', 50.0, 3)
+
+    # Act
+    total = calcular_total(db)
+
+    # Assert
+    assert total == 150.0
 
 def test_total_multiplos_itens(db):
     """
     Arrange: 3 itens com preços e quantidades diferentes
     Assert: total == soma correta
     """
-    # TODO: Implementar
-    pass
+
+    # Arrange
+    adicionar_item(db, 'Produto teste 01', 50.0, 3)
+    adicionar_item(db, 'Produto teste 02', 50.0, 2)
+    adicionar_item(db, 'Produto teste 03', 50.0)
+
+    # Act
+    total = calcular_total(db)
+
+    # Assert
+    assert total == 300.0
 
 
 # =====================================================================
@@ -131,13 +158,34 @@ def test_limpar_remove_todos_os_itens(db):
     Act: limpa o carrinho
     Assert: listar_itens retorna [] e total retorna 0.0
     """
-    # TODO: Implementar
-    pass
+
+    # Arrange
+    adicionar_item(db, 'Produto teste 01', 50.0, 3)
+    adicionar_item(db, 'Produto teste 02', 50.0, 2)
+
+    # Act
+    limpar_carrinho(db)
+
+    # Assert
+    assert len(listar_itens(db)) == 0
 
 def test_pode_adicionar_apos_limpar(db):
     """
     Arrange: adiciona, limpa, adiciona de novo
     Assert: somente o último item existe
     """
-    # TODO: Implementar
-    pass
+
+    # Arrange
+    adicionar_item(db, 'Produto teste 01', 50.0, 3)
+    adicionar_item(db, 'Produto teste 02', 50.0, 2)
+
+    limpar_carrinho(db)
+
+    adicionar_item(db, 'Produto novo', 20.00)
+
+    # Act
+    itens = listar_itens(db)
+
+    # Assert
+    assert len(itens) == 1
+    assert itens[0]['nome'] == 'Produto novo'

@@ -1,1 +1,3 @@
 entregas/
+.venv
+.pytest_cache
