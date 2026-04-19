@@ -1,143 +1,138 @@
-#!/usr/bin/env python3
-"""
-Testes de INTEGRAÇÃO — Módulo Carrinho (SQLite :memory:)
-Aula 11 — Teste de Software (2026.1) | UniCode UniEvangelica
-
-=======================================================================
-⚠️  POR QUE ESTE ARQUIVO É DIFERENTE DE test_pagamentos.py?
-=======================================================================
-
-  test_pagamentos.py       →  TESTE UNITÁRIO
-  ─────────────────────       ─────────────────────────────────────────
-  • Testa funções puras       • Sem banco de dados real
-  • Usa Stubs/Mocks            • Sem rede, sem arquivo externo
-  • Rápido: < 1ms por teste   • Isola a LÓGICA de negócio
-
-  test_carrinho_integracao.py →  TESTE DE INTEGRAÇÃO
-  ────────────────────────────   ──────────────────────────────────────
-  • Testa módulo + banco real  • SQLite real (em memória)
-  • Sem Mocks — toca o banco!  • Verifica PERSISTÊNCIA dos dados
-  • Um pouco mais lento        • Isola via fixture (banco novo p/ cada teste)
-
-=======================================================================
-"""
-
 import sqlite3
 import pytest
-import sys
-import os
-
-# Garante que o pacote 'app' é encontrado independente de onde o aluno rodar
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-
 from app.carrinho_db import (
     criar_tabela,
     adicionar_item,
     listar_itens,
     calcular_total,
-    limpar_carrinho,
+    limpar_carrinho
 )
 
 
-# =====================================================================
-# FIXTURE — Banco de dados isolado por teste
-# =====================================================================
+# ===========================================================================
+# FIXTURE — banco em memória, isolado por teste
+# ===========================================================================
 
 @pytest.fixture
 def db():
-    """
-    Fixture que entrega uma conexão SQLite ':memory:' com a tabela
-    'carrinho' já criada.
-
-    O banco EM MEMÓRIA é:
-      ✅ Criado do zero antes de cada teste (setup)
-      ✅ Destruído automaticamente ao fim de cada teste (teardown)
-      ✅ Completamente isolado — um teste não suja o outro
-    """
-    conn = sqlite3.connect(":memory:")   # banco vive apenas na RAM
-    criar_tabela(conn)                   # cria a estrutura da tabela
-    yield conn                           # entrega para o teste
-    conn.close()                         # teardown: banco destruído aqui
+    # Arrange: cria banco zerado na RAM
+    conn = sqlite3.connect(":memory:")
+    criar_tabela(conn)
+    yield conn          # entrega conexão para o teste
+    conn.close()        # destrói o banco ao fim do teste
 
 
-# =====================================================================
-# GRUPO 1 — Testes de Inserção e Persistência
-# =====================================================================
+# ===========================================================================
+# MISSÃO 1 — Inserção e persistência
+# ===========================================================================
 
 def test_item_persiste_no_banco(db):
-    """
-    MISSÃO: Verificar que um item inserido realmente fica no banco.
-    Arrange: Use adicionar_item(db, ...)
-    Act: Use listar_itens(db)
-    Assert: Verifique se o item está na lista e se os dados estão corretos.
-    """
-    # TODO: Implementar
-    pass
+    # Arrange
+    nome      = "Notebook Gamer"
+    preco     = 4799.99
+    quantidade = 1
+
+    # Act
+    adicionar_item(db, nome, preco, quantidade)
+    itens = listar_itens(db)
+
+    # Assert
+    assert len(itens) == 1
+    assert itens[0]["nome"]       == nome
+    assert itens[0]["preco"]      == preco
+    assert itens[0]["quantidade"] == quantidade
+
 
 def test_multiplos_itens_persistem(db):
-    """
-    Arrange: insere 3 itens distintos
-    Act: lista os itens
-    Assert: exatamente 3 itens retornados
-    """
-    # TODO: Implementar
-    pass
+    # Arrange
+    adicionar_item(db, "Mouse Gamer",      249.90, 1)
+    adicionar_item(db, "Teclado Mecânico", 479.00, 2)
+    adicionar_item(db, "Monitor 27'",     1899.00, 1)
+
+    # Act
+    itens = listar_itens(db)
+
+    # Assert
+    assert len(itens) == 3
+
 
 def test_preco_negativo_lanca_value_error(db):
-    """
-    Assert: ValueError deve ser lançado
-    Dica: use pytest.raises(ValueError)
-    """
-    # TODO: Implementar
-    pass
+    # Arrange
+    nome       = "Produto Inválido"
+    preco_ruim = -10.00
+    quantidade = 1
+
+    # Act + Assert
+    with pytest.raises(ValueError):
+        adicionar_item(db, nome, preco_ruim, quantidade)
 
 
-# =====================================================================
-# GRUPO 2 — Testes de Cálculo de Total
-# =====================================================================
+# ===========================================================================
+# MISSÃO 2 — Cálculo de total
+# ===========================================================================
 
 def test_carrinho_vazio_retorna_zero(db):
-    """
-    Arrange: banco vazio (nenhum insert)
-    Act + Assert: calcular_total retorna 0.0
-    """
-    # TODO: Implementar
-    pass
+    # Arrange: banco vazio, nenhum insert
+
+    # Act
+    total = calcular_total(db)
+
+    # Assert
+    assert total == 0.0
+
 
 def test_total_considera_quantidade(db):
-    """
-    Arrange: insere 3 unidades de R$ 50,00
-    Assert: total == 150.0  (preco × quantidade)
-    """
-    # TODO: Implementar
-    pass
+    # Arrange
+    preco      = 50.00
+    quantidade = 3
+
+    # Act
+    adicionar_item(db, "Fone de Ouvido", preco, quantidade)
+    total = calcular_total(db)
+
+    # Assert
+    assert total == 150.0   # 50.00 × 3 = 150.0
+
 
 def test_total_multiplos_itens(db):
-    """
-    Arrange: 3 itens com preços e quantidades diferentes
-    Assert: total == soma correta
-    """
-    # TODO: Implementar
-    pass
+    # Arrange
+    adicionar_item(db, "Webcam HD",    299.00, 2)   # 598.00
+    adicionar_item(db, "Hub USB",       89.90, 3)   # 269.70
+    adicionar_item(db, "Suporte Notebook", 149.00, 1) # 149.00
+
+    # Act
+    total = calcular_total(db)
+
+    # Assert
+    assert round(total, 2) == 1016.70   # 598.00 + 269.70 + 149.00
 
 
-# =====================================================================
-# GRUPO 3 — Testes de Limpeza do Carrinho
-# =====================================================================
+# ===========================================================================
+# MISSÃO 3 — Limpeza do carrinho
+# ===========================================================================
 
 def test_limpar_remove_todos_os_itens(db):
-    """
-    Arrange: adiciona 2 itens
-    Act: limpa o carrinho
-    Assert: listar_itens retorna [] e total retorna 0.0
-    """
-    # TODO: Implementar
-    pass
+    # Arrange
+    adicionar_item(db, "SSD 1TB",   379.00, 1)
+    adicionar_item(db, "Memória RAM", 219.00, 2)
+
+    # Act
+    limpar_carrinho(db)
+
+    # Assert
+    assert listar_itens(db)  == []
+    assert calcular_total(db) == 0.0
+
 
 def test_pode_adicionar_apos_limpar(db):
-    """
-    Arrange: adiciona, limpa, adiciona de novo
-    Assert: somente o último item existe
-    """
-    # TODO: Implementar
-    pass
+    # Arrange: adiciona, limpa, adiciona de novo
+    adicionar_item(db, "Item Antigo", 100.00, 1)
+    limpar_carrinho(db)
+    adicionar_item(db, "Item Novo",   250.00, 1)
+
+    # Act
+    itens = listar_itens(db)
+
+    # Assert
+    assert len(itens) == 1
+    assert itens[0]["nome"] == "Item Novo"
