@@ -8,6 +8,10 @@ Professor: Esp. Carlos Roberto Gomes Júnior
 """
 
 import sqlite3
+from collections import namedtuple
+
+# Define a estrutura de um item do carrinho
+Item = namedtuple("Item", ["id", "nome", "preco", "quantidade"])
 
 
 def criar_tabela(conn: sqlite3.Connection) -> None:
@@ -69,17 +73,17 @@ def adicionar_item(
 
 def listar_itens(conn: sqlite3.Connection) -> list:
     """
-    Retorna todos os itens do carrinho como lista de dicionários.
+    Retorna todos os itens do carrinho como lista de objetos Item.
 
     Returns:
-        list[dict]: Cada dict contém as chaves: id, nome, preco, quantidade.
+        list[Item]: Cada Item é uma namedtuple com atributos: id, nome, preco, quantidade.
                     Retorna lista vazia se o carrinho estiver vazio.
     """
     cursor = conn.cursor()
     cursor.execute("SELECT id, nome, preco, quantidade FROM carrinho")
     rows = cursor.fetchall()
     return [
-        {"id": row[0], "nome": row[1], "preco": row[2], "quantidade": row[3]}
+        Item(id=row[0], nome=row[1], preco=row[2], quantidade=row[3])
         for row in rows
     ]
 
