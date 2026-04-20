@@ -4,7 +4,7 @@
 
 | Campo | Valor |
 |:---|:---|
-| **Nome completo** | <!-- Ex: João da Silva Souza --> |
+| **Nome completo** | João Pedro Barbosa Moreira |
 | **Matrícula** | <!-- Ex: 2024001234 --> |
 | **Turma** | <!-- A (Segundas) ou B (Quintas) --> |
 | **Nome da branch** | <!-- Ex: pratica11/JoaoSilva-2024001234 --> |
