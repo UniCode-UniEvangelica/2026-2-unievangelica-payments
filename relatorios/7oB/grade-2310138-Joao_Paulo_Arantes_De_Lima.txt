@@ -1,0 +1,42 @@
+=================================================================
+  NOTA FINAL -- Joao Paulo Arantes De Lima
+  Matricula : 2310138
+  GitHub    : joaopauloarantes
+  Avaliado  : 2026-05-04 14:18
+=================================================================
+
+  PRATICA 11 -- Testes Unitarios (test_pagamentos.py)
+  Repo      : UniCode-UniEvangelica/2026-2-unievangelica-payments
+  PR: #31
+  C1  Bug juros (assert == 105.0)    : 0.25 / 0.25
+  C2  Estrutura AAA                  : 0.25 / 0.25
+  C3  BVA test_processar_reembolso   : 0.25 / 0.25
+  C4  CI verde (todos os testes)      : 0.25 / 0.25
+  SUBTOTAL Pratica11                 : 1.00 / 1.00
+
+  Observacoes Pratica11:
+    * Atencao: Requisito de 2 commits NAO ATENDIDO — O aluno submeteu 24 commit(s) neste PR.
+
+  LAB AVANCADO -- Integracao SQLite (app/carrinho_db.py)
+  Repo      : UniCode-UniEvangelica/2026-2-unievangelica-payments-7ob
+  PR: Nao submetido
+  Gabarito  : 0 / 16 testes passaram
+  SUBTOTAL Lab Avancado              : 0.00 / 1.00
+
+  Observacoes Lab Avancado:
+    * PR de Lab Avancado nao submetido ou fork externo
+
+-----------------------------------------------------------------
+  NOTA FINAL (Pratica11 + Lab)       : 1.00 / 2.00
+=================================================================
+
+  TEXTO PARA NOTIFICACAO DO ALUNO
+-----------------------------------------------------------------
+  [Pratica11 -- PR #31 em UniCode-UniEvangelica/2026-2-unievangelica-payments]
+    - Atencao: Requisito de 2 commits NAO ATENDIDO — O aluno submeteu 24 commit(s) neste PR.
+
+  [Lab Avancado] PR nao encontrado na org.
+  -> Submeta um PR na branch lab11-extra/NomeSobrenome-Matricula
+     no repositorio: UniCode-UniEvangelica/2026-2-unievangelica-payments-7ob
+     com app/carrinho_db.py e tests/test_carrinho_integracao.py.
+-----------------------------------------------------------------

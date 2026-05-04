@@ -1,0 +1,42 @@
+=================================================================
+  NOTA FINAL -- Andre Lucas Silva Rocha
+  Matricula : 2312495
+  GitHub    : Andre-Lucas-Dev
+  Avaliado  : 2026-05-04 14:17
+=================================================================
+
+  PRATICA 11 -- Testes Unitarios (test_pagamentos.py)
+  Repo      : UniCode-UniEvangelica/2026-2-unievangelica-payments
+  PR: #42
+  C1  Bug juros (assert == 105.0)    : 0.25 / 0.25
+  C2  Estrutura AAA                  : 0.25 / 0.25
+  C3  BVA test_processar_reembolso   : 0.00 / 0.25
+  C4  CI verde (todos os testes)      : 0.25 / 0.25
+  SUBTOTAL Pratica11                 : 0.75 / 1.00
+
+  Observacoes Pratica11:
+    * Atencao: Requisito de 2 commits NAO ATENDIDO — O aluno submeteu 24 commit(s) neste PR.
+    * C3 (0.00): test_processar_reembolso falha (asserts detectados: 0). Verifique os 3 casos BVA: parcial=50.0, limite=100.0, invalido (> valor_pago)=-1.0.
+
+  LAB AVANCADO -- Integracao SQLite (app/carrinho_db.py)
+  Repo      : UniCode-UniEvangelica/2026-2-unievangelica-payments-7ob
+  PR: #58
+  Gabarito  : 16 / 16 testes passaram
+  SUBTOTAL Lab Avancado              : 1.00 / 1.00
+
+  Observacoes Lab Avancado:
+    * Atencao: Requisito de 2 commits NAO ATENDIDO — O aluno submeteu 1 commit(s) neste PR.
+
+-----------------------------------------------------------------
+  NOTA FINAL (Pratica11 + Lab)       : 1.75 / 2.00
+=================================================================
+
+  TEXTO PARA NOTIFICACAO DO ALUNO
+-----------------------------------------------------------------
+  [Pratica11 -- PR #42 em UniCode-UniEvangelica/2026-2-unievangelica-payments]
+    - Atencao: Requisito de 2 commits NAO ATENDIDO — O aluno submeteu 24 commit(s) neste PR.
+    - C3 (0.00): test_processar_reembolso falha (asserts detectados: 0). Verifique os 3 casos BVA: parcial=50.0, limite=100.0, invalido (> valor_pago)=-1.0.
+
+  [Lab Avancado -- PR #58 em UniCode-UniEvangelica/2026-2-unievangelica-payments-7ob]
+    - Atencao: Requisito de 2 commits NAO ATENDIDO — O aluno submeteu 1 commit(s) neste PR.
+-----------------------------------------------------------------

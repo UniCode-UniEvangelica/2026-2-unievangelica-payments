@@ -1,0 +1,44 @@
+=================================================================
+  NOTA FINAL -- Augusto Mendes Martins
+  Matricula : 2311091
+  GitHub    : 99guto
+  Avaliado  : 2026-05-04 14:18
+=================================================================
+
+  PRATICA 11 -- Testes Unitarios (test_pagamentos.py)
+  Repo      : UniCode-UniEvangelica/2026-2-unievangelica-payments
+  PR: Nao submetido
+  C1  Bug juros (assert == 105.0)    : 0.00 / 0.25
+  C2  Estrutura AAA                  : 0.00 / 0.25
+  C3  BVA test_processar_reembolso   : 0.00 / 0.25
+  C4  CI verde (todos os testes)      : 0.00 / 0.25
+  SUBTOTAL Pratica11                 : 0.00 / 1.00
+
+  Observacoes Pratica11:
+    * PR de Pratica11 nao submetido ou fork externo
+
+  LAB AVANCADO -- Integracao SQLite (app/carrinho_db.py)
+  Repo      : UniCode-UniEvangelica/2026-2-unievangelica-payments-7ob
+  PR: Nao submetido
+  Gabarito  : 0 / 16 testes passaram
+  SUBTOTAL Lab Avancado              : 0.00 / 1.00
+
+  Observacoes Lab Avancado:
+    * PR de Lab Avancado nao submetido ou fork externo
+
+-----------------------------------------------------------------
+  NOTA FINAL (Pratica11 + Lab)       : 0.00 / 2.00
+=================================================================
+
+  TEXTO PARA NOTIFICACAO DO ALUNO
+-----------------------------------------------------------------
+  [Pratica11] PR nao encontrado na org.
+  -> Submeta um PR na branch pratica11/NomeSobrenome-Matricula
+     no repositorio: UniCode-UniEvangelica/2026-2-unievangelica-payments
+     com o arquivo tests/test_pagamentos.py corrigido.
+
+  [Lab Avancado] PR nao encontrado na org.
+  -> Submeta um PR na branch lab11-extra/NomeSobrenome-Matricula
+     no repositorio: UniCode-UniEvangelica/2026-2-unievangelica-payments-7ob
+     com app/carrinho_db.py e tests/test_carrinho_integracao.py.
+-----------------------------------------------------------------
