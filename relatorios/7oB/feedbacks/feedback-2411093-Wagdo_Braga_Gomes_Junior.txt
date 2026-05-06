@@ -1,0 +1,24 @@
+FEEDBACK - Aula 11 / Pratica 11 + Lab Extra
+Aluno  : Wagdo Braga Gomes Junior
+Matric.: 2411093
+Data   : 20260506
+
+PRATICA 11 (Testes Unitarios) - PR #13
+  C1 - test_aplicar_juros_atraso: 0.25/0.25
+  C2 - Arrange/Act/Assert em todos os testes: 0.25/0.25
+  C3 - test_processar_reembolso (>=3 casos BVA): 0.12/0.25
+  C4 - CI verde (todos os testes passam): 0.25/0.25
+  -------------------------------------------
+  TOTAL P11: 0.87/1.00
+
+LAB EXTRA (Testes de Integracao)
+  PR Lab Extra: #13
+  Gabarito: 16/16 testes passaram
+  -------------------------------------------
+  TOTAL Lab Extra: 1.00/1.00
+
+NOTA FINAL: 1.87 / 2.00
+
+Observacoes do corretor:
+  * C3 parcial (0.12): test_processar_reembolso passa mas tem apenas 2 assert(s). Minimo 3 casos de valor limite: (1) reembolso parcial=50.0, (2) reembolso total=100.0, (3) reembolso invalido -> retorna -1.0.
+  * Gabarito Lab rodado no PR P11 #13: 16/16 passaram.
