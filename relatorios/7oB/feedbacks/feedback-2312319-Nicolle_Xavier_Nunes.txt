@@ -1,23 +1,20 @@
-FEEDBACK - Aula 11 / Pratica 11 + Lab Extra
+FEEDBACK — Aula 11 | Prática 11 + Lab Extra | Turma 7oB
 Aluno  : Nicolle Xavier Nunes
 Matric.: 2312319
-Data   : 20260506
+Data   : 2026-05-06
 
-PRATICA 11 (Testes Unitarios) - PR #29
-  C1 - test_aplicar_juros_atraso: 0.25/0.25
-  C2 - Arrange/Act/Assert em todos os testes: 0.25/0.25
-  C3 - test_processar_reembolso (>=3 casos BVA): 0.25/0.25
-  C4 - CI verde (todos os testes passam): 0.25/0.25
-  -------------------------------------------
-  TOTAL P11: 1.00/1.00
+── PRÁTICA 11 — Testes Unitários (PR #29)
+   C1  test_aplicar_juros_atraso .............. 0.25/0.25
+   C2  Arrange/Act/Assert (todos os testes) ... 0.25/0.25
+   C3  test_processar_reembolso (≥3 BVA) ...... 0.25/0.25
+   C4  CI verde (todos passam) ................. 0.25/0.25
+   TOTAL P11 ................................. 1.00/1.00
 
-LAB EXTRA (Testes de Integracao)
-  PR Lab Extra: #29
-  Gabarito: 16/16 testes passaram
-  -------------------------------------------
-  TOTAL Lab Extra: 1.00/1.00
+── LAB EXTRA — Testes de Integração com SQLite (PR #29)
+   Gabarito: 16/16 testes passaram
+   TOTAL Lab ................................. 1.00/1.00
 
-NOTA FINAL: 2.00 / 2.00
+══ NOTA FINAL: 2.00/2.00 ══
 
-Observacoes do corretor:
-  * Gabarito Lab rodado no PR P11 #29: 16/16 passaram.
+Observações:
+  • Gabarito Lab rodado no PR P11 #29: 16/16 passaram.
