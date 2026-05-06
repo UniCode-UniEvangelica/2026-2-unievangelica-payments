@@ -71,8 +71,17 @@ def test_item_persiste_no_banco(db):
     Act: Use listar_itens(db)
     Assert: Verifique se o item está na lista e se os dados estão corretos.
     """
-    # TODO: Implementar
-    pass
+    # Arrange
+    adicionar_item(db, "Notebook", 3500.00, 1)
+
+    # Act
+    itens = listar_itens(db)
+
+    # Assert
+    assert len(itens) == 1
+    assert itens[0]["nome"] == "Notebook"
+    assert itens[0]["preco"] == 3500.00
+    assert itens[0]["quantidade"] == 1
 
 def test_multiplos_itens_persistem(db):
     """
@@ -80,16 +89,24 @@ def test_multiplos_itens_persistem(db):
     Act: lista os itens
     Assert: exatamente 3 itens retornados
     """
-    # TODO: Implementar
-    pass
+    # Arrange
+    adicionar_item(db, "Notebook", 3500.00, 1)
+    adicionar_item(db, "Mouse Gamer", 250.00, 2)
+    adicionar_item(db, "Teclado Mecânico", 450.00, 1)
+
+    # Act
+    itens = listar_itens(db)
+
+    # Assert
+    assert len(itens) == 3
 
 def test_preco_negativo_lanca_value_error(db):
     """
     Assert: ValueError deve ser lançado
     Dica: use pytest.raises(ValueError)
     """
-    # TODO: Implementar
-    pass
+    with pytest.raises(ValueError):
+        adicionar_item(db, "Produto Inválido", -10.00, 1)
 
 
 # =====================================================================
@@ -101,24 +118,41 @@ def test_carrinho_vazio_retorna_zero(db):
     Arrange: banco vazio (nenhum insert)
     Act + Assert: calcular_total retorna 0.0
     """
-    # TODO: Implementar
-    pass
+    # Act
+    total = calcular_total(db)
+
+    # Assert
+    assert total == 0.0
 
 def test_total_considera_quantidade(db):
     """
     Arrange: insere 3 unidades de R$ 50,00
     Assert: total == 150.0  (preco × quantidade)
     """
-    # TODO: Implementar
-    pass
+    # Arrange
+    adicionar_item(db, "Produto A", 50.00, 3)
+
+    # Act
+    total = calcular_total(db)
+
+    # Assert
+    assert total == 150.0
 
 def test_total_multiplos_itens(db):
     """
     Arrange: 3 itens com preços e quantidades diferentes
     Assert: total == soma correta
     """
-    # TODO: Implementar
-    pass
+    # Arrange
+    adicionar_item(db, "Notebook", 3500.00, 1)   # 3500.00
+    adicionar_item(db, "Mouse Gamer", 250.00, 2)  # 500.00
+    adicionar_item(db, "Teclado", 450.00, 1)      # 450.00
+
+    # Act
+    total = calcular_total(db)
+
+    # Assert
+    assert total == 4450.00
 
 
 # =====================================================================
@@ -131,13 +165,30 @@ def test_limpar_remove_todos_os_itens(db):
     Act: limpa o carrinho
     Assert: listar_itens retorna [] e total retorna 0.0
     """
-    # TODO: Implementar
-    pass
+    # Arrange
+    adicionar_item(db, "Produto A", 100.00, 1)
+    adicionar_item(db, "Produto B", 200.00, 1)
+
+    # Act
+    limpar_carrinho(db)
+
+    # Assert
+    assert listar_itens(db) == []
+    assert calcular_total(db) == 0.0
 
 def test_pode_adicionar_apos_limpar(db):
     """
     Arrange: adiciona, limpa, adiciona de novo
     Assert: somente o último item existe
     """
-    # TODO: Implementar
-    pass
+    # Arrange
+    adicionar_item(db, "Produto Antigo", 500.00, 1)
+    limpar_carrinho(db)
+
+    # Act
+    adicionar_item(db, "Produto Novo", 99.90, 1)
+    itens = listar_itens(db)
+
+    # Assert
+    assert len(itens) == 1
+    assert itens[0]["nome"] == "Produto Novo"
