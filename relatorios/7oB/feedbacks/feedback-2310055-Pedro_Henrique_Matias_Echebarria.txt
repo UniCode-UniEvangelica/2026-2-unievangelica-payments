@@ -1,0 +1,24 @@
+FEEDBACK - Aula 11 / Pratica 11 + Lab Extra
+Aluno  : Pedro Henrique Matias Echebarria
+Matric.: 2310055
+Data   : 20260506
+
+PRATICA 11 (Testes Unitarios) - PR #11
+  C1 - test_aplicar_juros_atraso: 0.25/0.25
+  C2 - Arrange/Act/Assert em todos os testes: 0.12/0.25
+  C3 - test_processar_reembolso (>=3 casos BVA): 0.00/0.25
+  C4 - CI verde (todos os testes passam): 0.25/0.25
+  -------------------------------------------
+  TOTAL P11: 0.62/1.00
+
+LAB EXTRA (Testes de Integracao)
+  PR Lab Extra: #57
+  Gabarito: 16/16 testes passaram
+  -------------------------------------------
+  TOTAL Lab Extra: 1.00/1.00
+
+NOTA FINAL: 1.62 / 2.00
+
+Observacoes do corretor:
+  * C2 parcial (0.12): apenas 3/4 funcoes tem # Arrange / # Act / # Assert. Adicione os 3 comentarios de secao em TODOS os test_*.
+  * C3 (0.00): test_processar_reembolso falha (asserts detectados: 0). Verifique os 3 casos BVA: parcial=50.0, limite=100.0, invalido (> valor_pago)=-1.0.

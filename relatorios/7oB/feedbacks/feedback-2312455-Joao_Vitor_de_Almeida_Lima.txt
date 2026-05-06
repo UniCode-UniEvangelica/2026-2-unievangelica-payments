@@ -1,0 +1,24 @@
+FEEDBACK - Aula 11 / Pratica 11 + Lab Extra
+Aluno  : Joao Vitor de Almeida Lima
+Matric.: 2312455
+Data   : 20260506
+
+PRATICA 11 (Testes Unitarios) - PR #---
+  C1 - test_aplicar_juros_atraso: 0.00/0.25
+  C2 - Arrange/Act/Assert em todos os testes: 0.00/0.25
+  C3 - test_processar_reembolso (>=3 casos BVA): 0.00/0.25
+  C4 - CI verde (todos os testes passam): 0.00/0.25
+  -------------------------------------------
+  TOTAL P11: 0.00/1.00
+
+LAB EXTRA (Testes de Integracao)
+  PR Lab Extra: #nao identificado
+  Gabarito: 0/16 testes passaram
+  -------------------------------------------
+  TOTAL Lab Extra: 0.00/1.00
+
+NOTA FINAL: 0.00 / 2.00
+
+Observacoes do corretor:
+  * PR de Pratica11 nao submetido ou fork externo
+  * PR de Lab Avancado nao submetido ou fork externo

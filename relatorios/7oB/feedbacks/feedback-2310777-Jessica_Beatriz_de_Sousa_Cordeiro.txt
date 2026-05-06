@@ -1,0 +1,20 @@
+FEEDBACK - Aula 11 / Pratica 11 + Lab Extra
+Aluno  : Jessica Beatriz de Sousa Cordeiro
+Matric.: 2310777
+Data   : 20260506
+
+PRATICA 11 (Testes Unitarios) - PR #47
+  C1 - test_aplicar_juros_atraso: 0.25/0.25
+  C2 - Arrange/Act/Assert em todos os testes: 0.25/0.25
+  C3 - test_processar_reembolso (>=3 casos BVA): 0.25/0.25
+  C4 - CI verde (todos os testes passam): 0.25/0.25
+  -------------------------------------------
+  TOTAL P11: 1.00/1.00
+
+LAB EXTRA (Testes de Integracao)
+  PR Lab Extra: #66
+  Gabarito: 16/16 testes passaram
+  -------------------------------------------
+  TOTAL Lab Extra: 1.00/1.00
+
+NOTA FINAL: 2.00 / 2.00
